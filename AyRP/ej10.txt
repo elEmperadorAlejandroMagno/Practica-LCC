@@ -1,0 +1,47 @@
+/* Que carácter es? */
+V para vocal
+D digito
+N para ninguno
+/*
+caracter evaluar_caracter(caracter input)
+carcater tipo
+tipo = 'N'
+	Si (input >= '0' AND input <= '9')
+	entonces
+		tipo = 'D'
+		retorna (tipo)
+	finSi
+	Segun (input)
+		valor 'A'
+			tipo = 'V'
+		valor 'E'
+			tipo = 'V'
+		valor 'I'
+			tipo = 'V'
+		valor 'O'
+		 	tipo = 'V'
+		valor 'U'
+			tipo = 'V'
+	finsegun	
+retorna (tipo)
+*/
+
+/* algoritmo principal */
+/* 
+comienzo
+caracter input, tipo
+
+Leer input
+
+tipo = evaluar_caracter(input)
+
+Segun (tipo)
+	valor 'V'
+		Escribir "El caracter es una vocal"
+	valor 'D'
+		Escribir "El caracter es un dígito"
+	valor 'N'
+		Escribir "El caracter no es ni vocal ni dígito"
+finsegun
+Fin
+*/

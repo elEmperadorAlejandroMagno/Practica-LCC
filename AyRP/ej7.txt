@@ -1,0 +1,31 @@
+//pseduo codigo ejercicio 7 Unidad 2 AyRP
+
+/*
+Calcular cantidad de frigorías necesarias para ambientar un lugar lo que requiere calcular el volumen de la habitación. Realizar un algoritmo, usano subprogramas.
+Nota: el volumen de la habitacion se calcula (ancho*largo)*alto y la cantidad de frigorías volumen*50
+*/
+
+Algoritmo calculo de frigorías para habitación
+real volumen_habitacion(real ancho, real largo, real alto)
+comienzo
+	real volumen;
+	volumen = (ancho*largo)*alto
+	retorna (volumen)
+fin
+real calculo_frigorias(real volumen)
+comienzo
+	real frigorias;
+	frigorias = volumen*50
+	retorna (frigorias)
+fin
+/* Algoritmo principal */
+Comienzo
+real ancho, base, alto, volumen, frigorias
+
+Leer ancho, base, alto
+
+volumen = volumen_habitacion(ancho, base, alto)
+frigorias = calculo_frigorias(volumen)
+
+Escribir "Para ambientar la habitación se necestia un dispositivo de ",frigorias,"frigorías"
+Fin
