@@ -1,0 +1,40 @@
+/* Que carácter es? */
+V para vocal
+D digito
+N para ninguno
+
+
+caracter evaluar_caracter(caracter input)
+carcater tipo
+constante cadena vocales = "aAeEiIoOuU"
+constante tamaño = 10
+tipo = 'N'
+	Si (input >= '0' AND input <= '9')
+	entonces
+		tipo = 'D'
+		retorna (tipo)
+	finSi
+	# usara bucle Para y una seleccion simple con vocales y
+	# actualizar variable tipo a V si coincide con alguna vocal 
+retorna (tipo)
+
+/* algoritmo principal */ 
+comienzo
+caracter input, tipo
+
+Escribir "Insertar caracter a evaluar: "
+Hacer
+	Leer input
+mientras (input != ' ')
+
+tipo = evaluar_caracter(input)
+
+Segun (tipo)
+	valor 'V'
+		Escribir "El caracter es una vocal"
+	valor 'D'
+		Escribir "El caracter es un dígito"
+	valor 'N'
+		Escribir "El caracter no es ni vocal ni dígito"
+finsegun
+Fin
