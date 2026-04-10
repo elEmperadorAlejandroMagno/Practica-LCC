@@ -1,3 +1,8 @@
+/*
+Ejercicio 10
+Realizar un algoritmo que determine si un carácter ingresado por el usuario es vocal, dígito o ninguno de
+los anteriores.
+*/
 # include <stdio.h>
 # include <string.h>
 
