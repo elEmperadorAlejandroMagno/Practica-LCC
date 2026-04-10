@@ -1,0 +1,61 @@
+Ejercicio 15
+Un supermercado procesa la información de las facturas emitidas en un día. De cada factura se ingresa:
+el número de factura, el importe total de la misma y la cantidad de productos vendidos. El ingreso
+termina con número de factura igual a cero.
+Diseñe un algoritmo que usando subprogramas permita:
+1. Mostrar por cada factura, el precio promedio de productos.
+2. Mostrar el número de cada factura cuyo importe sea mayor a $10000 o la cantidad de productos esté
+entre 100 y 200.
+
+Input: n° facutra, importe total y cantidad de productos vendidos
+output: precio promedio de productos, n° de factura si el importe es < $10000 o la cantidad de productos <= 100 >= 200
+
+float precio_promedio_producto(float importe, int cantidad)
+comienzo
+	float promedio
+	promedio = importe / cantidad
+	retorna promedio
+fin
+
+int get_num_factura()
+comienzo
+	int num
+	Escribir "Ingrese número de la factura: "
+	Leer num
+	retorna num
+fin
+
+float get_importe_total()
+comienzo
+	float importe
+	Escribir "Ingrese el importe total de la factura: $"
+	Leer importe
+	retorna importe
+fin
+
+int get_cantidad_productos()
+comienzo
+	int num
+	Escribir "Cantidad de productos de la factura: "
+	Leer num
+	retorna num
+fin
+
+/* Algoritmo principal */
+comienzo
+float importe_total
+int num_factura, cantidad_productos
+
+num_factura = get_num_factura()
+importe_total = get_importe_total()
+cantidad_productos = get_cantidad_productos()
+
+Si (importe_total >= 10000 || (cantidad_productos >= 100 && cantidad_productos <=200))
+	entonces
+		Escribir "Número de factura: ", num_facutura
+finSi
+
+Escribir "Promedio de costo por producto: $", precio_promedio_producto(importe_total, cantidad_productos)
+fin
+
+
