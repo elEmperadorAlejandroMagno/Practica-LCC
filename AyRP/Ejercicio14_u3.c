@@ -18,6 +18,7 @@ int obtener_num_apuesta() {
 	while(num < 0);
 	return num;
 }
+
 float obtener_dinero_apuesta() {
 	float dinero;
 	do
@@ -30,13 +31,8 @@ float obtener_dinero_apuesta() {
 }
 
 int main() {
-	int N;
-	do
-	{
-		printf("Cantidad de apuestas a ingresar: ");
-		scanf("%i",&N);
-	}
-	while(N > 10 || N <= 0);
+	/* N lo definimos nosotros */
+	const int N = 5;
 
 	for(int i = 0; i < N; i++) {
 		int num;
