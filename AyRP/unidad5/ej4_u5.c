@@ -52,13 +52,9 @@ int load_new_arr(int a[], int b[]) {
 int j, max;
 j = 0;
 max = load_max(a);
-printf("Empleados máximos %d\n", max);
 for (int i = 0; i < N; i++) {
 	if(a[i] == max) {	
-		printf("i: %d\n", i);
-		printf("E: %d\n", a[i]);
 		b[j] = i + 1;
-		printf("localidad: %d\n",b[j]);
 		j++;
 	}
 }
@@ -86,12 +82,11 @@ if (argc > 2) {
 
 init_arr(localidades);
 load_arr(localidades, E);
+lenL = load_new_arr(localidades, localidadesMax);
 sort_arr_desc(localidades);
 for (int i = 0; i < N; i++) {
 	printf("Empleados: %d\n", localidades[i]);
 }
-// No se puede guardar localidad si se modifica el indice del arreglo original
-//lenL = load_new_arr(localidades, localidadesMax);
-//show_loc_max(localidadesMax, lenL);
+show_loc_max(localidadesMax, lenL);
 return 0;
 } 
