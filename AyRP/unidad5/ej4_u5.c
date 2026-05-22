@@ -1,8 +1,8 @@
 # include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
 
 const int N = 19;
-const int E = 5;
-
 
 void init_arr(int a[]) {
 for (int i = 0; i < N; i++) {
@@ -11,7 +11,7 @@ for (int i = 0; i < N; i++) {
 return;
 }
 
-void load_arr(int a[]) {
+void load_arr(int a[], int E) {
 int codL, cantE;
 for (int i = 0; i < E; i++) {
 	do {
@@ -19,7 +19,7 @@ for (int i = 0; i < E; i++) {
 		scanf("%d", &codL);
 		printf("Cantidad de empleados: ");
 		scanf("%d", &cantE);
-	} while(codL < 0 && codL > 19 || cantE < 0);
+	} while(codL < 0 || codL > 19 || cantE < 0);
 	a[codL - 1] = a[codL - 1] + cantE;
 }
 return;
@@ -27,7 +27,7 @@ return;
 
 void sort_arr_desc(int a[]) {
 int i, j, aux;
-for (int i = 1; i < N; i++) {
+for (int i = 0; i < N; i++) {
 	aux = a[i];
 	j = i-1;
 	while ( aux > a[j]  && j >= 0) {
@@ -49,12 +49,16 @@ return max;
 }
 
 int load_new_arr(int a[], int b[]) {
-int i, j, max;
+int j, max;
 j = 0;
 max = load_max(a);
+printf("Empleados máximos %d\n", max);
 for (int i = 0; i < N; i++) {
-	if(a[i] == max) {
-		b[j] = i+1;
+	if(a[i] == max) {	
+		printf("i: %d\n", i);
+		printf("E: %d\n", a[i]);
+		b[j] = i + 1;
+		printf("localidad: %d\n",b[j]);
 		j++;
 	}
 }
@@ -68,15 +72,26 @@ for (int i = 0; i < n; i++) {
 return;
 }
 
-int main() {
-int max, lenL;
+int main(int argc, char *argv[]) {
+int max, lenL, E;
 int localidades[N], localidadesMax[N];
+
+if (argc > 2) {
+	if (strcmp(argv[1], "-E") == 0 && atoi(argv[2]) > 0) {
+		E = atoi(argv[2]);
+	}
+} else {
+	E = 600;
+}
+
 init_arr(localidades);
-load_arr(localidades);
+load_arr(localidades, E);
 sort_arr_desc(localidades);
-lenL = load_new_arr(localidades, localidadesMax);
-show_loc_max(localidadesMax, lenL);
+for (int i = 0; i < N; i++) {
+	printf("Empleados: %d\n", localidades[i]);
+}
+// No se puede guardar localidad si se modifica el indice del arreglo original
+//lenL = load_new_arr(localidades, localidadesMax);
+//show_loc_max(localidadesMax, lenL);
 return 0;
 } 
-	
-
