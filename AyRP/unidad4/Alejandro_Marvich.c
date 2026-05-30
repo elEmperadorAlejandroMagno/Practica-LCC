@@ -8,8 +8,8 @@ struct alumno {
 
 const int N = 6;
 
-void load_data(struct alumno arr[], int n) {
-    for (int i=0; i < n; i++) {
+void load_data(struct alumno arr[]) {
+    for (int i=0; i < N; i++) {
         printf("Ingrese legajo: ");
         scanf("%d", &arr[i].legajo);
         printf("Ingrese edad: ");
@@ -21,36 +21,38 @@ void load_data(struct alumno arr[], int n) {
     return;
 }
 
-int average_edad(struct alumno arr[], int n) {
+int average_edad(struct alumno arr[])  {
     int avg, acum;
     acum = 0;
-    for (int i=0; i < n; i++) {
+    for (int i=0; i < N; i++) {
         acum = acum + arr[i].edad;
     }
-    avg = acum / n;
+    avg = acum / N;
     return avg;
 }
 
-void search_legajo(struct alumno arr[], int n, int legajo) {
+void search_legajo(struct alumno arr[], int legajo) {
     bool found;
     int i, edad;
     i = 0;
     found = false;
 
-    while (found == false && i < n) {
+    while (found == false && i < N) {
         if (arr[i].legajo == legajo) {
             found = true;
             edad = arr[i].edad;
         }
         i++;
     }
-    printf("La edad del alumno con legajo %d es %d\n", legajo, edad);
+    if (found == true) {
+    	printf("La edad del alumno con legajo %d es %d\n", legajo, edad);
+    } else printf("No se ha encontrado un alumno con legajo %d\n", legajo);
     return;
 }
 
-void filtro_edad(struct alumno arr[], int n, int avg) {
+void filtro_edad(struct alumno arr[], int avg) {
     printf("Los alumnos que superan el promedio de edad son: \n");
-    for (int i=0; i < n; i++) {
+    for (int i=0; i < N; i++) {
         if (arr[i].edad > avg) {
             printf("✔ El estudiante en posicion %d\n", i);
         }
@@ -61,14 +63,14 @@ int main() {
     struct alumno alumnos[N];
     int edad_prom, legajo;
 
-    load_data(alumnos, N);
+    load_data(alumnos);
     printf("------0------\n");
     printf("Ingrese legajo a buscar: ");
     scanf("%d", &legajo);
-    search_legajo(alumnos, N, legajo);
-    edad_prom = average_edad(alumnos, N);
+    search_legajo(alumnos, legajo);
+    edad_prom = average_edad(alumnos);
     printf("------0------\n");
-    filtro_edad(alumnos, N, edad_prom);
+    filtro_edad(alumnos, edad_prom);
     printf("------0------\n");
     printf("Alumno: Alejandro Marvich E010-869\nProfesor/a: Silvina Balmaceda\n");
 
