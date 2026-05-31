@@ -1,0 +1,159 @@
+algoritmo obreros 
+
+constante entero N = 7
+constante entero M = 125
+
+void cerear(entero a[N])
+comienzo
+entero i
+Para i desde 0 hasta N - 1
+	a[i] = 0
+finPara
+return()
+fin
+
+void cargar(entero a[N])
+comienzo
+entero codO, i
+Para i desde 1 hasta M 
+	Leer cod0
+	a[cod0 - 1] = a[cod0 - 1] + 1
+finPara
+return()
+fin
+
+entero cargar_sub(entero a[N], entero b[N])
+comienzo
+entero i, j
+j = 0
+Para i desde 0 hasta N - 1
+	Si (a[i] > 25)
+		entonces
+		b[j] = a[i]
+		j = j + 1
+	finSi
+finPara
+return(j)
+fin
+
+void mostrar(entero a[N], entero n)
+comienzo
+entero i
+Para i desde 0 hasta n - 1
+	Escribir "Obra con",a[i],"obreros supera el limite de 25"
+finPara
+return()
+fin
+
+/* algoritmo principal */
+comienzo
+entero obras[N]
+entero sub_obras
+entero len
+cerear(obras)
+cargar(obras)
+len = cargar_sub(sub_obras)
+mostrar(sub_obras, len)
+fin
+
+
+
+algoritmo consultorio médico
+
+constante entero N = 30
+
+registro paciente {
+	cadena nombre
+	entero edad
+	entero dni
+}
+
+void cargar(paciente a[N])
+comienzo 
+entero i, edad, dni
+cadena nombre
+Para i desde 0 hasta N - 1
+	Escribir "Ingrese nombre del paciente:"
+	Leer nombre
+	a[i].nombre = nombre
+	Escribir "Ingrese edad del paciente"
+	Leer edad
+	a[i].edad = edad
+	Escribir "Ingrese DNI del paciente"
+	Leer dni
+	a[i].dni = dni
+finPara
+retorna()
+fin
+
+void ordenar_asc(paciente a[N])
+comienzo
+entero i, j
+paciente aux
+Para i desde 0 hasta N - 1
+	j = i - 1
+	aux = a[i]
+	Mientras(j >= 0 && aux > a[j])
+		a[j + 1] = a[j]
+		j = j + 1
+	finMientras
+	a[j + 1] = aux
+finPara
+retorna()
+fin
+
+entero busqueda_bin(paciente a[N], cadena nombre)
+comienzo
+entero dni, inf, sup, medio
+booleano encontrado
+encontrado = falso
+inf = 0
+sup = N - 1
+medio = (inf + sup) div 2
+Mientras ((econtrado == falso) Y (inf <= sup))
+	Si(a[medio].nombre == nombre)
+	entonces
+		encontrado = verdadero
+	sino 
+		Si(nombre < a[medio].nombre)
+		entonces
+			sup = medio - 1
+		sino inf = medio + 1
+		finSi
+	finSi
+	medio = (inf + sup) div 2
+finMientras
+Si(encontrado == verdadero)
+entonces
+	retorna(medio)
+sino retorna(-1)
+finSi
+fin
+
+entero prom(paciente a[N])
+comienzo
+entero p, acum, i
+acum = 0
+Para i desde 0 hasta N - 1
+	acum = acum + a[i].edad
+finPara
+p = acum div N
+retorna(p)
+fin
+
+/* algoritmo principal */
+comienzo
+entero i
+paciente pacientes[N]
+cadena nombre
+cargar(pacientes)
+ordenar_asc(pacientes)
+Leer nombre
+i = busqueda_bin(pacientes, nombre)
+Si(i != -1)
+entonces
+	Escribir "El paciente",pacientes[i].nombre,"tiene DNI",pacientes[i].dni
+sino Escribir "No se encontró el paciente con nombre", nombre
+Escribir "El promedio de edad de los pacientes es de",prom(pacientes)
+fin
+

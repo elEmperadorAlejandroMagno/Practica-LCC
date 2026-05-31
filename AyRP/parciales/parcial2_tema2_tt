@@ -1,0 +1,158 @@
+algoritmo tienda
+
+constante entero N = 20
+
+void cerear(real a[N])
+comienzo
+Para i desde 0 hasta N - 1
+	a[i] = 0
+finPara
+retorna()
+fin
+
+void cargar(real a[N])
+comienzo
+entero tipo
+real importe
+Escribir "Ingrese importe"
+Leer importe
+Mientras(importe != -1)
+	Escribir "Ingrese tipo del producto"
+	Leer tipo
+	a[tipo - 1] = a[tipo - 1] + importe
+	"Escribir ingrese importe"
+	Leer importe
+finMientras
+retorna()
+fin
+
+entero cargar_sub(real a[N], real b[N])
+comienzo
+entero i, j
+j = 0
+Para i desde 0 hasta N - 1
+	Si(a[i] > 1000000)
+	entonces
+		b[j] = a[i]
+		j = j + 1
+	finSi
+finPara
+retorna(j)
+fin
+
+void mostrar(real a[N], entero j)
+comienzo
+entero i
+Para i desde 0 hasta j - 1
+	Escribir "se vendió $", a[i]
+finPara
+retorna()
+fin
+
+/* algoritmo principal */
+comienzo
+real ventas[N]
+real sub_ventas[N]
+entero len
+cargar(ventas)
+len = cargar_sub(ventas, sub_ventas)
+mostar(sub_ventas, len)
+fin
+
+
+algoritmo alumnos becados
+
+constante entero N = 50
+
+registro alumno {
+	cadena nombre
+	entero materias
+}
+
+void cargar(alumno a[N])
+comienzo
+entero i, materias
+cadena nombre
+Para i desde 0 hasta N - 1
+	Escribir "Ingrese nombre del alumno"
+	leer nombre
+	a[i].nombre = nombre
+	Escribir "Materias aprobadas"
+	leer materias
+	a[i].materias = materias
+finPara
+retorna()
+fin
+
+void ordenar_desc(alumno a[N])
+comienzo
+entero i, j
+alumno aux
+Para i desde 1 hasta N - 1
+j = i - 1
+aux = a[i]
+Mientas((j >= 0) Y (aux.nombre > a[j].nombre))
+	a[j + 1] = a[j]
+	j = j - 1
+finMientras
+a[j + 1] = aux
+retorna()
+fin
+
+entero busqueda_bin(alumno a[N], entero materias)
+comienzo
+entero inf, sup, medio
+booleano encontrado
+encontrado = falso
+inf = 0
+sup = N - 1
+medio = (inf + sup) div 2
+Mientras((inf <= sup) Y (encontrado != verdadero))
+	Si(materias == a[medio].materias)
+	entonces
+		encontrado = verdadero
+	sino
+		Si(materias > a[medio].materias)
+		entonces sup = medio - 1
+		sino inf = medio + 1
+		finSi
+	finSi
+	medio = (inf + sup) div 2
+finMientras
+Si(encontrado == verdadero)
+entonces
+	retorna(medio)
+sino retorna(-1)
+fin
+
+entero total_materias(alumno a[N])
+comienzo
+entero acum
+acum = 0
+Para i desde 0 hasta N - 1
+	acum = acum + a[i].materias
+finPara
+retorna(acum)
+fin
+
+/* algoritmo pricipal */
+comienzo
+alumno alumnos[N]
+entero materias_aprobadas, i
+cargar(alumnos)
+ordenar_desc(alumnos)
+Leer materias_aprobadas
+i = busqueda_bin(alumnos, materias_aprobadas)
+Si(i != -1)
+entonces
+	Escribir "El alumno con ",materias_aprobadas,"materias aprobadas se llama",alumnos[i].nombre
+sino Escribir "No se ha encontado un alumno con ",materias_aprobadas,"materias aprobadas"
+finSi
+Escribir "Las materias total aprobadas son", total_materias(alumnos)
+fin
+
+
+
+
+
+
