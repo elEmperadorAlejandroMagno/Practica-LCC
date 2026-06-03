@@ -1,0 +1,50 @@
+Ejercicio 3: Distribuidora de Bebidas
+Manejo de un stock de 50 productos vendidos a 20 comercios. Por cada comercio se ingresan los siguientes datos: CUIL
+del comercio y la información de las compras realizadas por ese comercio a la distribuidora de bebidas. De cada compra,los datos ingresados son: Nombre del producto comprado y cantidad de unidades de éste.
+1. Almacenar, por cada uno de los 50 productos: el nombre y el precio unitario.
+2. Mostrar para los comercios, un listado ordenado descendentemente por importe total que muestre el número de
+CUIL y el importe total.
+3. Generar una estructura que contenga el CUIL de aquellos comercios que compraron más de 500 unidades, indicar
+cuántos son.
+4. Dado el CUIL de un comercio indicar si se encuentra entre los comercios que compraron más de 500 unidades
+5. Mostrar por cada uno de los 50 productos la cantidad total de unidades que la distribuidora debe tener para
+satisfacer los pedidos realizados.
+
+algoritmo distrubiuidora de bebidas
+
+registro compra {
+	cadena nombre
+	entero cantidad
+}
+
+registro producto {
+	cadena nombre
+	real precio_u
+}
+
+registro comercio {
+	entero cuil
+	producto compras[]
+	real total_importe
+	entero total_unidades
+}
+constante entero cant_prod = 50
+constante entero N = 20
+
+void cargar_stock(producto a[cant_prod])
+comienzo
+entero i
+real precio
+cadena nombre
+Para i desde 0 hasta cant_prod - 1
+	Escribir "Nombre del producto:"
+	Leer nombre
+	Escribir "Precio del producto por unidad"
+	Leer precio
+	a[i].nombre = nombre
+	a[i].precio_u = precio
+finPara
+retorna()
+fin
+
+	
