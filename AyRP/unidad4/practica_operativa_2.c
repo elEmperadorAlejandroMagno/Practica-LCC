@@ -72,7 +72,6 @@ int main() {
     printf("------0------\n");
     filtro_edad(alumnos, edad_prom);
     printf("------0------\n");
-    printf("Alumno: Alejandro Marvich E010-869\nProfesor/a: Silvina Balmaceda\n");
 
     return 0;
 }
