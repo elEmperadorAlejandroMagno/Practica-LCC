@@ -60,7 +60,7 @@ int binary_search(struct paciente a[], int dni) {
 void filtro_dias(struct paciente a[]) {
 	for (int i=0; i < N; i++) {
 		if (a[i].dias_internacion > 7) {
-			printf("✔ El paciente en posicion %d\n", i);
+			printf("✔ El paciente en posicion %d con %d días de internación\n", i, a[i].dias_internacion);
 		}
 	}
     return;
@@ -84,6 +84,7 @@ int main() {
         printf("No se ha encontrado un paciente con DNI %d\n", dni);
     }
     printf("------0------\n");
+    printf("Pacientes con dias de internación superior a 7:\n");
     filtro_dias(pacientes);
 
     return 0;
