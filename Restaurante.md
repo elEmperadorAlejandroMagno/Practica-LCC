@@ -9,6 +9,7 @@ Además, se requiere una estructura adecuada para manejar las **mesas**, el **ga
 ## Lista de requisitos
 
 - Debe ser posible registrar clientes en una mesa, y agregar pedidos.
-- Una vez que los comensales se retiren debe limpiarse la mesa para nuevos clientes
-- Llevar conteo de los ingresos totales y mostrarlos
+- Una vez que los comensales se retiren debe limpiarse la mesa para nuevos clientes.
+- Llevar conteo de los ingresos totales y mostrarlos.
 - Se debe poder realizar una búsqueda de una mesa específica y mostrar los datos.
+- Luego de limpiar la mesa debe mostrarse la cuenta con los gastos y los pedidos.
