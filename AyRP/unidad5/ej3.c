@@ -93,17 +93,19 @@ int cargarNuevaListaComercios(comercio c[], char nc[C][24])
 	int cant;
 	for(int i = 0; i < C; i++)
 	{
-		int k = 0;
 		cant = 0;
-		while(k < P && c[i].compras[k].cantidad != 0)
+		for(int k = 0; k < P; k++)
 		{
-			cant += c[i].compras[k].cantidad;
-			k++;
+			if(c[i].compras[k].cantidad != 0)
+			{
+				cant += c[i].compras[k].cantidad;
+			}
 		}
 		if (cant > LIMIT)
 		{
 			strcpy(nc[j], c[i].CUIL);
 			j++;
+			printf("Se agrego comercio a la lista que supera el limite");
 		}
 	}
 	return j; // mostar la cantida de comercios > 500 productos en main()
@@ -129,6 +131,26 @@ void mostrarProductosRequeridos(comercio c[], producto p[])
 // no puede procesar lista de compras con productos en distinto orden
 // crear arreglo de contadores en orden, incrementar cantidades con condicion
 // luego recorrer el arreglo y mostrar cantidades con el nombre almacenado en en arreglo de productos
+	int count;
+	int k;
+	for(int i = 0; i < P; i++)
+	{
+		count = 0;
+		count += c[0].compras[i].cantidad;
+		for(int j = 1; j < C; j++)
+		{
+			k = 0;
+			while(k < P && strcmp(c[0].compras[i].nombre, c[j].compras[k].nombre) != 0)
+			{
+				k++;
+			}
+			if(k < P)
+			{
+				count += c[j].compras[k].cantidad;
+			}
+		}
+		printf("La distribuidora requiere %d unidades de %s\n", count, c[0].compras[i].nombre);
+	}
 	return;
 }
 
@@ -147,8 +169,8 @@ comercio comerciosA[3] = {
     {
         "20-12345678-9",
         {
-            { "Arroz", 10 },
-            { "Aceite", 5 },
+            { "Arroz", 2 },
+            { "Aceite", 1 },
             { "Fideos", 0 },
             { "Azucar", 0 },
             { "Yerba", 0 }
@@ -158,9 +180,9 @@ comercio comerciosA[3] = {
     {
         "23-98765432-1",
         {
-            { "Fideos", 20 },
-            { "Azucar", 15 },
-            { "Yerba", 8 },
+            { "Fideos", 1 },
+            { "Azucar", 2 },
+            { "Yerba", 1 },
             { "Arroz", 0 },
             { "Aceite", 0 }
         },
@@ -169,7 +191,7 @@ comercio comerciosA[3] = {
     {
         "27-45678901-2",
         {
-            { "Yerba", 12 },
+            { "Yerba", 1 },
             { "Arroz", 0 },
             { "Fideos", 0 },
             { "Aceite", 0 },
@@ -184,7 +206,7 @@ comercio comerciosA[3] = {
 	char comerciosB[C][24];
 	int lenComerciosB;
 	char CUIL[24];
-	bool f;
+	bool f = false;
 
 	//cargarProductos(productos);
 	sortImporteTotalDesc(comerciosA);
@@ -192,12 +214,15 @@ comercio comerciosA[3] = {
 	lenComerciosB = cargarNuevaListaComercios(comerciosA, comerciosB);
 	printf("Ingrese CUIL de comercio:");
 	scanf("%19s", CUIL);
-	f = searchByCUIL(comerciosB, CUIL, C);
+	if(lenComerciosB > 0)
+	{
+		f = searchByCUIL(comerciosB, CUIL, C);
+	}
 	if (f == true)
 	{
 		printf("Comercio con CUIL %s ha comprado más de %d productos\n", CUIL, LIMIT);
 	} else printf("Comercio con CUIL %s no se ha encontrado o no ha superado la compra de %d productos\n", CUIL, LIMIT);	
-	//mostrarProductosRequeridos(comerciosA, productos);
+	mostrarProductosRequeridos(comerciosA, productos);
 
 	return 0;
 }
