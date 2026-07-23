@@ -17,14 +17,6 @@ satisfacer los pedidos realizados.
 #include <stdbool.h>
 #include <string.h>
 
-const int P = 5;
-const int C = 3;
-const int limit = 5;
-#define C 10
-#define MAX_CUIL 20
-
-char nc[C][MAX_CUIL]; 
-
 /*typedef struct arrStr
 {
 	char *str[];
@@ -49,7 +41,9 @@ typedef struct comercio
 	float importe_total;
 } comercio;
 
-
+const int P = 5;
+const int C = 3;
+const int LIMIT = 5;
 
 void cargarProductos(producto lista_productos[])
 {
@@ -93,7 +87,7 @@ void mostrarCUILImporteComercios(comercio c[])
 	return;
 }
 
-int cargarNuevaListaComercios(comercio c[], char nc[][MAX_CUIL])
+int cargarNuevaListaComercios(comercio c[], char nc[C][24])
 {
 	int j = 0;
 	int cant;
@@ -103,10 +97,10 @@ int cargarNuevaListaComercios(comercio c[], char nc[][MAX_CUIL])
 		cant = 0;
 		while(k < P && c[i].compras[k].cantidad != 0)
 		{
-			cant = cant + c[i].compras[k].cantidad;
+			cant += c[i].compras[k].cantidad;
 			k++;
 		}
-		if (cant > 500)
+		if (cant > LIMIT)
 		{
 			strcpy(nc[j], c[i].CUIL);
 			j++;
@@ -115,7 +109,7 @@ int cargarNuevaListaComercios(comercio c[], char nc[][MAX_CUIL])
 	return j; // mostar la cantida de comercios > 500 productos en main()
 }
 
-bool searchByCUIL(char nc[][MAX_CUIL], char CUIL[24], int len)
+bool searchByCUIL(char nc[C][24], char CUIL[24], int len)
 {
 	int i = 0;
 
@@ -132,16 +126,9 @@ bool searchByCUIL(char nc[][MAX_CUIL], char CUIL[24], int len)
 
 void mostrarProductosRequeridos(comercio c[], producto p[])
 {
-	int count;
-	for(int i = 0; i < P; i++)
-	{
-		count = 0;
-		for(int j = 0; j < C; j++)
-		{
-			count += c[j].compras[i].cantidad;
-		}
-		printf("Se han comprado: %d unidades de %s\n", count, p[i].nombre); 
-	}
+// no puede procesar lista de compras con productos en distinto orden
+// crear arreglo de contadores en orden, incrementar cantidades con condicion
+// luego recorrer el arreglo y mostrar cantidades con el nombre almacenado en en arreglo de productos
 	return;
 }
 
@@ -194,6 +181,7 @@ comercio comerciosA[3] = {
 
 	//producto productos[P];
 	//comercio comerciosA[C];
+	char comerciosB[C][24];
 	int lenComerciosB;
 	char CUIL[24];
 	bool f;
@@ -201,16 +189,15 @@ comercio comerciosA[3] = {
 	//cargarProductos(productos);
 	sortImporteTotalDesc(comerciosA);
 	mostrarCUILImporteComercios(comerciosA);
-	lenComerciosB = cargarNuevaListaComercios(comerciosA, nc);
+	lenComerciosB = cargarNuevaListaComercios(comerciosA, comerciosB);
 	printf("Ingrese CUIL de comercio:");
 	scanf("%19s", CUIL);
-	f = searchByCUIL(nc, CUIL, lenComerciosB);
+	f = searchByCUIL(comerciosB, CUIL, C);
 	if (f == true)
 	{
-		printf("Comercio con CUIL %s ha comprado más de 500 productos\n", CUIL);
-	} else printf("Comercio con CUIL %s no ha superado la compra de 500 productos\n", CUIL);
-	
-	mostrarProductosRequeridos(comerciosA, productos);
+		printf("Comercio con CUIL %s ha comprado más de %d productos\n", CUIL, LIMIT);
+	} else printf("Comercio con CUIL %s no se ha encontrado o no ha superado la compra de %d productos\n", CUIL, LIMIT);	
+	//mostrarProductosRequeridos(comerciosA, productos);
 
 	return 0;
 }
