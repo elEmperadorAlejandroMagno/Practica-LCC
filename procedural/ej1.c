@@ -10,17 +10,18 @@ void showArrDetails(float arr[]);
 void initArr(float arr[]);
 void getMaxMinValue(float arr[]);
 void showvalRL(float arr[]);
+void checkFirstArrValue(float arr[]);
 
 int main()
 {
     float arr_g[N];
-    //float min = 99999, max = 0, avg_g;
     initArr(arr_g);
     getNullValue(arr_g);
     printf("Peso promedio de las piezas: %.2fg\n", getAvgWeight(arr_g));
     showEvenIndex(arr_g);
     getMaxMinValue(arr_g);
     showvalRL(arr_g);
+    checkFirstArrValue(arr_g);
     printf("Tamaño del arreglo %zu bytes\n", sizeof(arr_g));
     return 0;
 };
@@ -53,10 +54,8 @@ void getMaxMinValue(float arr[])
             i_max = i;
         }
     }
-    printf("Peso mínimo: %2.fg\n", min);
-    printf("posición %d\n", i_min);
-    printf("Peso máximo: %2.fg\n", max);
-    printf("posición %d\n", i_max);
+    printf("Peso mínimo: %2.fg | posición %d\n", min, i_min);
+    printf("Peso máximo: %2.fg | posición %d\n", max, i_max);
     return;
 };
 
@@ -67,7 +66,7 @@ float getAvgWeight(float arr[])
     {
         avg += arr[i];
     }
-    return avg;
+    return (avg/N);
 };
 
 void getNullValue(float arr[])
@@ -94,7 +93,7 @@ void showEvenIndex(float arr[])
     int i = 0;
     while(i < N)
     {
-        printf("Pieza con peso de %.2f g\n", *(arr + i));
+        printf("Pieza con peso de %.2f g\n | índice %d", *(arr + i), i);
         i += 2;
     }
     return;
@@ -102,12 +101,31 @@ void showEvenIndex(float arr[])
 
 void showvalRL(float arr[])
 {
+    int count = 0;
     for(int i = 0; i < N; i++)
     {
         if(((int)arr[i] % 2) == 0)
         {
-            printf("arr[%d] Valor-L(identificador) %p | Valor-R(dato almacenado en memoria): %.2f\n", i, &arr[i], arr[i]);
+            count++;
+            printf("Valor-L(identificador representa una ubicacion en memoria) %p | Valor-R(dato almacenado en memoria): %.2f\n", &arr[i], arr[i]);
         }
+    }
+    if(count > 0)
+    {
+        printf("Hay %d piezas con peso par\n", count);
     }
     return;
 };
+
+void checkFirstArrValue(float arr[])
+{
+    if(arr[0] == *arr)
+    {
+       printf("El identificador del arreglo efectivamente cumple con el array decay \n arr[0] hace referencia a la misma direccion de memoria que *arr y por lo tanto se obtiene el mismo valor.\n");
+       printf("arr[0] %p \n *arr %p\n", &arr[0], arr);
+    } else
+    {
+        printf("El identificador del arreglo no esta cumpliendo con el array decay");
+    }
+};
+
