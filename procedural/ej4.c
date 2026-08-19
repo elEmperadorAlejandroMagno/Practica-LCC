@@ -14,14 +14,15 @@ void getBestWorstGrade(int mat[S][E]);
 void getFreeStudents(int mat[S][E]);
 void fixWrongData(int mat[S][E]);
 void insertCorrectData(int *grade);
-void getInsertionMode(char opt);
+void getInsertionMode(char *opt);
 int myRand(int min, int max);
 
 int main()
 {
     int std_grades[S][E];
     char option;
-    getInsertionMode(option);
+    getInsertionMode(&option);
+    printf("Opción elegida %c\n", option);
     insertGrades(std_grades, option);
     getStudentCondition(std_grades);
     getExamsPerformance(std_grades);
@@ -31,14 +32,14 @@ int main()
     return 0;
 };
 
-void getInsertionMode(char opt)
+void getInsertionMode(char *opt)
 {
     do
     { 
         printf("Insert 'M' for manual insertion of data or 'A' for automatic insertion: ");
-        scanf("%c", &opt);
+        scanf("%c", opt);
     }
-    while(opt != 'M' && opt != 'A');
+    while(*opt != 'M' && *opt != 'A');
     return;
 };
 
@@ -51,7 +52,7 @@ void insertGrades(int mat[S][E], char opt)
             switch(opt)
             {
                 case 'M':
-                    printf("Studen %d\n Exam %d\n Insert grade: ", (i+1), (j+1));
+                    printf("Studen %d | Exam %d\n Insert grade: ", (i+1), (j+1));
                     scanf("%d", &mat[i][j]);
                     break;
                 case 'A':
