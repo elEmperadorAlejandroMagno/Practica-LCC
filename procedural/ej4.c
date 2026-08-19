@@ -2,8 +2,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-#define E 4
-#define S 8
+#define E 2 // real 4
+#define S 3 // real 8
 
 void insertGrades(int mat[S][E], char opt);
 void getStudentCondition(int mat[S][E]);
@@ -77,7 +77,7 @@ float getStudentAvg(int mat[])
         {
             avg += mat[j];
         }
-    return avg;
+    return (avg / E);
 };
 
 void getStudentCondition(int mat[S][E])
@@ -85,13 +85,13 @@ void getStudentCondition(int mat[S][E])
     float avg;
     for(int i = 0; i < S; i++)
     {
-        avg = getStudentAvg(mat[S]);
+        avg = getStudentAvg(mat[i]);
         showStudentCondition((i+1), avg);
     }
     return;
 };
 
-const char* checkStudentCondition(float avg)
+char* checkStudentCondition(float avg)
 {
     if(avg >= 7) return "Promocional";
     else if(avg >= 4) return "Regular";
@@ -100,7 +100,7 @@ const char* checkStudentCondition(float avg)
 
 void showStudentCondition(int std, float avg)
 {
-    printf("El estudiante %d esta con condición %s", std, checkStudentCondition(avg));
+    printf("El estudiante %d esta con condición %s\n", std, checkStudentCondition(avg));
 };
 
 void getExamsPerformance(int mat[S][E])
@@ -125,7 +125,7 @@ void getExamsPerformance(int mat[S][E])
             min = avg;
             i_min = i;
         }
-        printf("Promedio de la comision en el examen %d es de %f", (i+1), avg);
+        printf("Promedio de la comision en el examen %d es de %.2f\n", (i+1), avg);
     }
     return;
 };
@@ -155,8 +155,8 @@ void getBestWorstGrade(int mat[S][E])
             }
         }
     }
-    printf("El mejor examen fue del alumno %d en el examen %d con nota %.2f", s_max, e_max, max);
-    printf("El peor examen fue del alumno %d en el examen %d con nota %.2f", s_min, e_min, min);
+    printf("El mejor examen fue del alumno %d en el examen %d con nota %.2f\n", s_max+1, e_max+1, max);
+    printf("El peor examen fue del alumno %d en el examen %d con nota %.2f\n", s_min+1, e_min+1, min);
     return;
 };
 
@@ -166,10 +166,10 @@ void getFreeStudents(int mat[S][E])
     float avg;
     for (int i = 0; i < S; i++)
     {
-        avg = getStudentAvg(mat[S]);
+        avg = getStudentAvg(mat[i]);
         if (avg < 4) count++;
     }
-    printf("Hay %d alumnos con condición Libre", count);
+    printf("Hay %d alumnos con condición Libre\n", count);
     return;
 };
 
@@ -179,7 +179,7 @@ void fixWrongData(int mat[S][E])
     {
         for(int j = 0; j < E; j++)
         {
-            while(mat[i][j] == 0)
+            while(mat[i][j] <= 0)
             {
                 printf("Se ha detectado un error en el exament %d del alumno %d\n Ingrese una nota correcta: ", (j+1), (i+1));
                 scanf("%d", &mat[i][j]);
