@@ -112,7 +112,7 @@ void getExamsPerformance(int mat[S][E])
         float avg = 0;
         for(int j = 0; j < S; j++)
         {
-            avg += mat[j][i];
+            avg += mat[i][j];
         }
         avg = (avg / S);
         if(avg > max)
@@ -126,6 +126,8 @@ void getExamsPerformance(int mat[S][E])
             i_min = i;
         }
         printf("Promedio de la comision en el examen %d es de %.2f\n", (i+1), avg);
+        printf("El examen con mejor rendimiento fue el n° %d", i_max);
+        printf("El examen con menor rendimiento fue el n° %d", i_min);
     }
     return;
 };
