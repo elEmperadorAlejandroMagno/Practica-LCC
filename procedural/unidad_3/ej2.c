@@ -5,7 +5,6 @@
 
 typedef struct
 {
-    int code;
     char name[40];
     float u_price;
     int stock;
@@ -37,9 +36,6 @@ void initProducts(product arr[])
     for(int i = 0; i < N; i++)
     {
         printf("Product details\n");
-        printf("Code: ");
-        // asumir que el codigo del producto es único
-        scanf(" %d", &arr[i].code);
         getchar();
         printf("name:");
         fgets(arr[i].name, sizeof(arr[i].name), stdin);
@@ -71,14 +67,10 @@ float salesProcessor(product arr[])
         printf("Units sold: ");
         scanf(" %d", &units);
         i = 0;
-        while(i < N && arr[i].code != targ)
+        if(arr[targ].stock >= units)
         {
-            i++;
-        }
-        if(i < N && arr[i].stock >= units)
-        {
-            arr[i].stock -= units;
-            acum += (arr[i].u_price * units);
+            arr[targ].stock -= units;
+            acum += (arr[targ].u_price * units);
         } else printf("Producto no encontrado o no hay suficiente stock\n");
         printf("Product code: ");
         scanf(" %d", &targ);
