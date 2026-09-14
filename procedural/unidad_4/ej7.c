@@ -8,10 +8,10 @@ typedef struct
 } p_det;
 
 void getMaxPrice(p_det product[], int i, float *max_price, int P);
-void loadProducts(p_det *arr[], int *P);
-float getAvgPrice(p_det arr[], int i, float *avg, int P);
+void loadProducts(p_det **arr, int *P);
+void getAvgPrice(p_det arr[], int i, float *avg, int P);
 void saveProductBelowAvg(p_det arr[], int i, p_det **arrb, int P, int *j, float avg);
-void getMinMaxArrB(p_det **arr, int i, int j, float *min, float *max);
+void getMinMaxArrB(p_det arr[], int i, int j, float *min, float *max);
 
 int main()
 {
@@ -21,11 +21,15 @@ int main()
     int P = 0, j = 0;
     float max_price = 0, avg, max = 0, min = 99999;
     loadProducts(&arr, &P);
+    for(int i = 0; i < P; i++)
+    {
+        printf("Producto %d\n cantidad %d\n precio $%.2f\n", i + 1, arr[i].quant, arr[i].price);
+    }
     getMaxPrice(arr, 0, &max_price, P);
-    avg = getAvgPrice(arr, 0, &avg, P); 
+    getAvgPrice(arr, 0, &avg, P);
+    printf("Precio promedio: $%.2f\n", avg);
     saveProductBelowAvg(arr, 0, &arrb, P, &j, avg);
-    // calcular minimo y maximo
-    getMinMaxArrB(&arrb, 0, j, &min, &max);
+    getMinMaxArrB(arrb, 0, j, &min, &max);
     printf("Precio máximo por debajo del precio promedio: %.2f\n", max);
     printf("Precio mínimo por debajo del precio promedio: %.2f\n", min);
     free(arr);
@@ -33,7 +37,7 @@ int main()
     return 0;
 };
 
-void loadProducts(p_det	*arr[], int *P)
+void loadProducts(p_det	**arr, int *P)
 {
 	int cant;
 	printf("Ingrese cantidad de productos: ");
@@ -45,18 +49,23 @@ void loadProducts(p_det	*arr[], int *P)
 		if(*P > 0)
 		{
 			p_det *tmp = malloc(sizeof(p_det) * (*P + 1));
+            if(tmp == NULL)
+            {
+                printf("Error en memoria");
+                return;
+            }
 			for(int i = 0; i < *P; i++)
 			{
 				tmp[i] = (*arr)[i];
 			}
-			free(arr);
+			free(*arr);
 			*arr = tmp;
-			scanf("%f", &(*arr)[*P + 1].price);
-			(*arr)[*P + 1].quant = cant;
+			scanf("%f", &(*arr)[*P].price);
+			(*arr)[*P].quant = cant;
 		} else
 		{
-			scanf("%f", &(*arr)[*P + 1].price);
-			(*arr)[*P + 1].quant = cant;
+			scanf("%f", &(*arr)[*P].price);
+			(*arr)[*P].quant = cant;
 		}
 		*P += 1;
 		loadProducts(arr, P);
@@ -84,13 +93,18 @@ void getMaxPrice(p_det product[], int i, float *max_price, int P)
     } else return;
 };
 
-float getAvgPrice(p_det arr[], int i, float *avg, int P)
+void getAvgPrice(p_det arr[], int i, float *avg, int P)
 {
     if(i < P)
     {
         *avg += arr[i].price;
-        return getAvgPrice(arr, i + 1, avg, P);
-    } else return (*avg / P);
+        getAvgPrice(arr, i + 1, avg, P);
+        return;
+    } else
+    {
+        *avg = (*avg) / P;
+        return;
+    }
 };
 
 void saveProductBelowAvg(p_det arr[], int i, p_det **arrb, int P, int *j, float avg)
@@ -103,6 +117,11 @@ void saveProductBelowAvg(p_det arr[], int i, p_det **arrb, int P, int *j, float 
             if(*j > 0)
             {
                 p_det *tmp = malloc((*j + 1) * sizeof(p_det));
+                if(tmp == NULL)
+                {
+                    printf("Error en memoria");
+                    return;
+                }
                 for(int k = 0; k < *j; k++)
                 {
                     tmp[k] = (*arrb)[k];
@@ -118,12 +137,12 @@ void saveProductBelowAvg(p_det arr[], int i, p_det **arrb, int P, int *j, float 
     return;
 };
 
-void getMinMaxArrB(p_det **arr, int i, int j, float *min, float *max)
+void getMinMaxArrB(p_det arr[], int i, int j, float *min, float *max)
 {
     if(i < j)
     {
-        if((*arr)[i].price < *min) *min = (*arr)[i].price;
-        if((*arr)[i].price > *max) *max = (*arr)[i].price;
+        if((arr)[i].price < *min) *min = (arr)[i].price;
+        if((arr)[i].price > *max) *max = (arr)[i].price;
         getMinMaxArrB(arr, i + 1, j, min, max);
         return;
     } return;
