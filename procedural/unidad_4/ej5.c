@@ -19,7 +19,10 @@ int main()
     loadVoteArr(arr_votes, 0);
     getMaxMin(arr_votes, &min, &max, 0, &i_min, &i_max);
     getEvaluation(arr_votes, &c_less5k, &c_more9k, 0);
+    printf("Cantidad de lenguajes con menos de 5000 votos: %d\n", *less5k);{
+    printf("Cantidad de lenguajes con más de 9000 votos: %d\n", *more9k);
     getAvg(arr_votes, &acum, 0);
+    printf("Cantidad de lenguajes por ecima del promedio: %d", *count);
     return 0;
 };
 
@@ -72,8 +75,6 @@ void getEvaluation(int arr[], int *less5k, int *more9k, int i)
         return;
     } else
     {
-        printf("Cantidad de lenguajes con menos de 5000 votos: %d\n", *less5k);
-        printf("Cantidad de lenguajes con más de 9000 votos: %d\n", *more9k);
         return;
     };
 };    
@@ -88,10 +89,6 @@ void getAvg(int arr[], int *acum, int i, int *avg, int *count)
 	if(arr[i] > *avg)
 	{
 		count++;
-	}
-	if(i == 0)
-	{
-		printf("Cantida de lenguajes por encima del promedio: %d", count);
 	}
         return;
     }else

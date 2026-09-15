@@ -73,9 +73,6 @@ void loadProducts(p_det	**arr, int *P)
 	} else return;
 };
 
-
-
-
 void getMaxPrice(p_det product[], int i, float *max_price, int P)
 {
     if(i < P)
@@ -102,7 +99,7 @@ void getAvgPrice(p_det arr[], int i, float *avg, int P)
         return;
     } else
     {
-        *avg = (*avg) / P;
+        *avg = *avg / P;
         return;
     }
 };
