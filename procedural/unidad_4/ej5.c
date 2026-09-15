@@ -6,7 +6,7 @@ void loadVoteArr(int arr[], int i);
 void getMaxMin(int arr[], int *min, int *max, int i, int *i_min, int *i_max);
 void getEvaluation(int arr[], int *less5k, int *more9k, int i);
 void getLanguageAboveAvg(int arr[], int i, int avg);
-void getAvg(int a[], int *acum, int i);
+void getAvg(int a[], int *acum, int i, int *avg, int*);
 
 const char *LANGUAGES[] = {"Javascript", "HTML", "CSS", "Java", "Python", "C"};
 
@@ -15,6 +15,7 @@ int main()
     int arr_votes[L];
     int min = 99999, max = 0, c_less5k = 0, c_more9k = 0, acum = 0;
     int i_min, i_max;
+    int *avg = 0, *count = 0;
     loadVoteArr(arr_votes, 0);
     getMaxMin(arr_votes, &min, &max, 0, &i_min, &i_max);
     getEvaluation(arr_votes, &c_less5k, &c_more9k, 0);
@@ -77,30 +78,35 @@ void getEvaluation(int arr[], int *less5k, int *more9k, int i)
     };
 };    
 
-void getAvg(int arr[], int *acum, int i)
-{
-    int avg;
+void getAvg(int arr[], int *acum, int i, int *avg, int *count)
+{	
     if(i < L)
     {
         *acum += arr[i];
         getAvg(arr, acum, i + 1);
+	*avg = *acum / L;
+	if(arr[i] > *avg)
+	{
+		count++;
+	}
+	if(i == 0)
+	{
+		printf("Cantida de lenguajes por encima del promedio: %d", count);
+	}
         return;
     }else
     {
-        avg = *acum / L;
-        printf("Promedio de votos: %d\n",avg);
-        getLanguageAboveAvg(arr, 0, avg);
         return;
     }
 };
 
-void getLanguageAboveAvg(int arr[], int i, int avg)
+void getLanguageAboveAvg(int arr[], int i, int avg, int *count)
 {
     if(i < L)
     {
         if(arr[i] > avg)
         {
-            printf("%s esta por encima del promedio de votos\n", LANGUAGES[i]);
+		(*count)++;
         }
         getLanguageAboveAvg(arr, i + 1, avg);
         return;
