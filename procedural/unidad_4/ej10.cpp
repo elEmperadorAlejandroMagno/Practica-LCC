@@ -14,14 +14,13 @@ int main()
 	int acum = 0;
 	int avg = 0;
 	int max = 0;
-	printf("hola mundo");
 	//getTotalMonth(details[2], acum, 0);
-	getAvgPerBus(details, &avg, 0, 0);
+	getAvgPerBus(details, avg, 0, 0);
 	//getMaxPerBus(details, max);
 	return 0;
 };
 
-void getAvgPerBus(int matriz[][C], int *avg, int i, int j)
+void getAvgPerBus(int matriz[][C], int &avg, int i, int j)
 {
 	if(j < C)
 	{
