@@ -50,20 +50,26 @@ void cargaListas(tarea tareas[])
 	if(cod != -1)
 	{
 		ptr nuevo = (ptr) malloc(sizeof(struct nodo));
-		if(nuevo != NULL)
+		printf("Ingrsre codigo de dron: ");
+		scanf("%d", &nuevo->cod_dron);
+
+		printf("Ingrse codigo de tarea: ");
+		scanf("%d", &nuevo->cod_tarea);
+
+		printf("Ingrese gestion de tarea: ");
+		scanf("%s", nuevo->gestion);
+
+		nuevo->sig = NULL;
+		if(tareas[cod - 1].cab != NULL)
 		{
-			printf("Ingrsre codigo de dron: ");
-			scanf("%d", &nuevo->cod_dron);
-
-			printf("Ingrse codigo de tarea: ");
-			scanf("%d", &nuevo->cod_tarea);
-
-			printf("Ingrese gestion de tarea: ");
-			scanf("%s", nuevo->gestion);
-
-			nuevo->sig = tareas[cod].cab;
-			tareas[cod].cab = nuevo;
-		}
+			ptr aux = tareas[cod - 1].cab;
+			while(aux->sig != NULL)
+			{
+				aux = aux->sig;
+			}
+			aux->sig = nuevo;
+		} else 	tareas[cod - 1].cab = nuevo;
+		
 		cargaListas(tareas);
 	}
 	return;
