@@ -45,11 +45,12 @@ void cargaArr(tarea tareas[], int i)
 void cargaListas(tarea tareas[])
 {
 	int cod;
+	ptr nuevo, aux;
 	printf("Ingrese codigo de prioridad(1-4): ");
 	scanf("%d", &cod);
 	if(cod != -1)
 	{
-		ptr nuevo = (ptr) malloc(sizeof(struct nodo));
+		nuevo = (ptr) malloc(sizeof(struct nodo));
 		printf("Ingrsre codigo de dron: ");
 		scanf("%d", &nuevo->cod_dron);
 
@@ -60,15 +61,19 @@ void cargaListas(tarea tareas[])
 		scanf("%s", nuevo->gestion);
 
 		nuevo->sig = NULL;
-		if(tareas[cod - 1].cab != NULL)
+		if(tareas[cod - 1].cab == NULL)
 		{
-			ptr aux = tareas[cod - 1].cab;
+			tareas[cod - 1].cab = nuevo;
+		}
+		else
+		{
+			aux = tareas[cod - 1].cab;
 			while(aux->sig != NULL)
 			{
 				aux = aux->sig;
 			}
 			aux->sig = nuevo;
-		} else 	tareas[cod - 1].cab = nuevo;
+		}	
 		
 		cargaListas(tareas);
 	}
