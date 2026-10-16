@@ -19,7 +19,7 @@ typedef struct
 	ptr cab;
 }tarea;
 
-void cargaArr(tarea arr[], int *i);
+void cargaArr(tarea arr[], int i);
 void cargaListas(tarea arr[]);
 
 int main()
@@ -30,15 +30,14 @@ int main()
 	return 0;
 }
 
-void cargaArr(tarea tareas[], int *i)
+void cargaArr(tarea tareas[], int i)
 {
-	if(*i < N)
+	if(i < N)
 	{
 		printf("Ingrese nombre de supervisor: ");
-		scanf("%s", tareas[*i].supervisor);
-		tareas[*i].cab = NULL;
-		*i+=1;
-		cargaArr(tareas, i);
+		scanf("%s", tareas[i].supervisor);
+		tareas[i].cab = NULL;
+		cargaArr(tareas, i + 1);
 	}
 	return;
 };
@@ -50,14 +49,14 @@ void cargaListas(tarea tareas[])
 	scanf("%d", &cod);
 	if(cod != -1)
 	{
-		ptr nuevo = (ptr) malloc(sizeof(ptr));
+		ptr nuevo = (ptr) malloc(sizeof(struct nodo));
 		if(nuevo != NULL)
 		{
 			printf("Ingrsre codigo de dron: ");
-			scanf("%d", nuevo->cod_dron);
+			scanf("%d", &nuevo->cod_dron);
 
 			printf("Ingrse codigo de tarea: ");
-			scanf("%d", nuevo->cod_tarea);
+			scanf("%d", &nuevo->cod_tarea);
 
 			printf("Ingrese gestion de tarea: ");
 			scanf("%s", nuevo->gestion);
