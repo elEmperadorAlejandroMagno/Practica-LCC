@@ -14,3 +14,11 @@ Si queremos especificar el nombre de salida del archivo ejecutable utilizamos la
 ```
 gcc *nombre del archivo .c* -o *nombre de salida*
 ```
+Para compilar un archivo .cpp es decir un programa de C++ utilizamos el comando *g++*
+```
+g++ *nombre del archivo*.cpp
+```
+Para especificar el nombre del ejecutable compilado
+```
+g++ *nombre del archivo*.cpp -o *nombre de salida*
+```
