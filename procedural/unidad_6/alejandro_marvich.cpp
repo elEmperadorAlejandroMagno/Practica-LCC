@@ -16,6 +16,7 @@ int obtenerMetricas(Paciente *lista, int *min_espera, int &pacientes_demora);
 int buscarPaciente(Paciente *lista, int n_hclinica, int &tiempo_espera);
 void mostrarMetricas(int pacientes_L, int min_espera, int pacientes_demora);
 void mostrarPaciente(int nivel_urgencia, int tiempo_espera);
+void eliminarListaRec(Paciente *&lista);
 
 int main()
 {
@@ -28,6 +29,7 @@ int main()
     scanf("%d", &n_hclinica);
     nivel_urgencia = buscarPaciente(lista, n_hclinica, tiempo_espera);
     mostrarPaciente(nivel_urgencia, tiempo_espera);
+    eliminarListaRec(lista);
     return 0;
 }
 
@@ -122,4 +124,14 @@ void mostrarPaciente(int nivel_urgencia, int tiempo_espera)
         return;
     }
     printf("El paciente es de nivel de urgencia %d y su tiempo de espera fue de %d minutos.\n", nivel_urgencia, tiempo_espera); 
+}
+
+void eliminarListaRec(Paciente *&lista)
+{
+    if (lista != NULL) 
+    {
+        eliminarListaRec(lista->sig);
+        free(lista);
+        lista = NULL; 
+    }
 }
