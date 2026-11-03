@@ -59,7 +59,8 @@ void identificarEmpresa(FILE *original)
  		    fwrite(&aux, sizeof(Empresa), 1, original);
  	    }
     }
-    rewind(original);
+    fflush(original); // aplica los cambios del buffer(RAM) y los guarda en la memoria fisica(secundaria)
+    rewind(original); // reinicia el puntero al principio del archivo
     return;
 };
 
