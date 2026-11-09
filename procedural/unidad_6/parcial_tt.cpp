@@ -45,6 +45,7 @@ Búsqueda en archivo: Ingresar un nombre de película y a partir de
 #include <string.h>
 
 #define FILENAME "pelicula.dat"
+#define GENEROS 6
 
 typedef struct {
     int codigo;
@@ -91,10 +92,17 @@ void loadLista(FILE *file, Nodo *&lista)
 };
 
 void sortLista(Nodo *cab);
+void initArr(int *arr);
+void loadArr(int *arr, Nodo *cab);
+void mostarArr(int *arr);
+int searchFilmByTitle(FILE *file, int *arr, Pelicula &pelicula);
+void liberarLista(Nodo *&lista);
 
 int main()
 {
     Nodo *lista;
+    int arr[GENEROS], encontrado;
+    Pelicula pelicula;
     FILE *fp = fopen(FILENAME, "rb+");
     if(fp == NULL)
     {
@@ -104,7 +112,19 @@ int main()
     initLista(lista);
     loadLista(fp, lista);
     sortLista(lista);
+    initArr(arr);
+    loadArr(arr, lista);
+    mostarArr(arr);
+    encontrado = searchFilmByTitle(fp, arr, pelicula);
+    if(encontrado != 0)
+    {
+        printf("Codigo: %d", pelicula.codigo); 
+        printf("Titulo: %s", pelicula.titulo);
+        printf("Genero: %d", pelicula.genero);
+        printf("Entradas vendidas: %d", pelicula.entradas_vendidas);
+    }
     fclose(fp);
+    liberarLista(lista);
     return 0;
 }
 
@@ -122,7 +142,7 @@ void sortLista(Nodo *cab)
         {
             if (strcmp(p->pelicula.titulo, p->sig->pelicula.titulo) > 0)
             { // Comparación para orden ascendente
-                aux_dato = p->pelicula; // guardamos en auxiliar
+aux_dato = p->pelicula; // guardamos en auxiliar
                 p->pelicula = p->sig->pelicula; // intercambio
                 p->sig->pelicula = aux_dato;
                 k = p; // Marca el último intercambio realizado
@@ -132,3 +152,63 @@ void sortLista(Nodo *cab)
         cota = k->sig; // La nueva cota es el sig del último intercambio
     }
 }
+
+void initArr(int *arr)
+{
+    int i;
+    for(i = 0; i < GENEROS; i++)
+    {
+        arr[i] = 0;
+    }
+};
+
+void loadArr(int *arr, Nodo *cab)
+{
+    while(cab != NULL)
+    {
+        arr[cab->pelicula.genero - 1] += cab->pelicula.entradas_vendidas;
+        cab = cab->sig;
+    }
+};
+
+void mostarArr(int *arr)
+{
+    for(int i = 0; i < GENEROS; i++)
+    {
+        printf("Genero %d", i+1);
+        printf("Entradas vendidas: %d", arr[i]);
+    }
+};
+
+float calculoRecaudacion(float precio, int *arr, int i)
+{
+    if(i < GENEROS)
+    {
+        return (precio * arr[i] + calculoRecaudacion(precio, arr, i+1));
+    }
+    return 0;
+};
+
+int searchFilmByTitle(FILE *fp, char *titulo, Pelicula &pelicula)
+{
+    rewind(fp);
+    int encontrado = 0;
+    while(fread(&pelicula, sizeof(Pelicula), 1, fp) == 1 && encontrado != 1)
+    {
+        if(strcmp(titulo, pelicula.titulo) == 0)
+        {
+            encontrado = 1;
+        }
+    }
+    return encontrado;
+};
+
+void liberarLista(Nodo *&cab)
+{
+    if(cab != NULL)
+    {
+        liberarLista(cab->sig);
+        free(cab);
+        cab = NULL;
+    }
+};
